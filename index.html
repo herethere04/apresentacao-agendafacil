@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgendaFácil - Apresentação Final</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- TEMA: DARK MODE / MODERN --- */
+        :root {
+            /* Cores Principais */
+            --bg-color: #1e1e1e;       /* Fundo Escuro */
+            --card-bg: #2d2d2d;        /* Fundo dos Cards */
+            --primary: #2dd4bf;        /* Verde Água Brilhante (Teal) */
+            --accent: #f59e0b;         /* Laranja */
+            
+            /* Texto */
+            --text-main: #f1f5f9;      /* Branco Suave */
+            --text-muted: #94a3b8;     /* Cinza Claro */
+            
+            /* Sombras */
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #111; /* Fundo navegador */
+            color: var(--text-main);
+        }
+
+        .presentation-container {
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100vh;
+            scroll-snap-align: start;
+            overflow: hidden;
+            position: relative;
+            background-color: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem;
+        }
+
+        /* Fundo decorativo (Blob) - Agora Verde Escuro */
+        .slide::before {
+            content: '';
+            position: absolute;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(20, 184, 166, 0.15) 0%, rgba(30, 30, 30, 0) 70%);
+            border-radius: 50%;
+            top: -200px;
+            right: -200px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .slide-content {
+            z-index: 1;
+            width: 100%;
+            max-width: 1300px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Tipografia */
+        h1 { font-size: 4rem; font-weight: 800; letter-spacing: -2px; color: var(--primary); margin: 0; }
+        h2 { font-size: 2.5rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem; }
+        h3 { font-size: 1.25rem; font-weight: 600; color: var(--primary); margin-bottom: 0.5rem; }
+        p { font-size: 1.1rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; }
+        
+        /* Cards Genéricos */
+        .card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* --- LAYOUTS ESPECÍFICOS --- */
+
+        /* Slide 1: Capa */
+        .cover-layout { display: grid; grid-template-columns: 1.5fr 1fr; gap: 4rem; align-items: center; }
+        .cover-tag { background: var(--accent); color: #fff; padding: 0.5rem 1.2rem; border-radius: 50px; font-weight: 600; font-size: 0.9rem; display: inline-block; margin-bottom: 1.5rem; }
+        
+        .team-grid { display: grid; grid-template-columns: 1fr; gap: 0.8rem; }
+        .team-member { 
+            background: var(--card-bg); 
+            padding: 1rem 1.5rem; 
+            border-radius: 8px; 
+            border-left: 4px solid var(--primary); /* Borda lateral verde */
+            box-shadow: var(--card-shadow); 
+        }
+        .team-member strong { display: block; color: var(--text-main); font-size: 1.1rem; }
+        .team-member span { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.2rem; display: block;}
+
+        /* Slide 2: Problema */
+        .pain-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem; }
+        .pain-card { background: var(--card-bg); padding: 2rem; border-radius: 12px; border-left: 4px solid #ef4444; box-shadow: var(--card-shadow); }
+
+        /* Slide 3: Solução */
+        .solution-card-wrapper { display: flex; gap: 2rem; justify-content: center; }
+        .solution-card { flex: 1; background: var(--card-bg); padding: 2rem; border-radius: 12px; border-top: 4px solid var(--primary); box-shadow: var(--card-shadow); }
+        .solution-card.accent-border { border-top-color: var(--accent); }
+
+        /* Slide 4: Personas */
+        .persona-container { display: flex; gap: 2rem; margin-top: 2rem; }
+        .persona-card { flex: 1; background: var(--card-bg); padding: 2rem; border-radius: 16px; text-align: center; box-shadow: var(--card-shadow); border: 1px solid rgba(255,255,255,0.05); }
+        .persona-avatar { width: 80px; height: 80px; background: #3f3f46; border-radius: 50%; margin: 0 auto 1rem auto; display: flex; align-items: center; justify-content: center; font-size: 2rem; }
+
+        /* Slide 5: MVP (Estilo da sua Imagem) */
+        .mvp-layout { display: grid; grid-template-columns: 2fr 1.2fr; gap: 2rem; margin-top: 2rem; }
+        
+        /* Caixa Verde */
+        .must-have { 
+            background: rgba(16, 185, 129, 0.1); /* Fundo verde transparente */
+            border: 2px solid #10b981; 
+            padding: 2.5rem;
+            border-radius: 16px;
+        }
+        .must-have h3 { color: #34d399; display: flex; align-items: center; gap: 0.5rem; font-size: 1.4rem;}
+        .must-have ul { list-style: none; padding: 0; margin-top: 1.5rem; }
+        .must-have li { color: #ecfdf5; font-size: 1.1rem; margin-bottom: 0.8rem; display: flex; align-items: center; }
+        .must-have li::before { content: '•'; color: #34d399; font-weight: bold; font-size: 1.5rem; margin-right: 0.8rem; line-height: 0; }
+
+        /* Caixa Vermelha */
+        .wont-have { 
+            background: rgba(239, 68, 68, 0.1); /* Fundo vermelho transparente */
+            border: 2px dashed #ef4444; 
+            opacity: 0.8;
+            padding: 2.5rem;
+            border-radius: 16px;
+        }
+        .wont-have h3 { color: #f87171; display: flex; align-items: center; gap: 0.5rem; font-size: 1.4rem; }
+        .wont-have ul { list-style: none; padding: 0; margin-top: 1.5rem; }
+        .wont-have li { color: #fecaca; font-size: 1.1rem; margin-bottom: 0.8rem; display: flex; align-items: center; }
+        .wont-have li::before { content: '•'; color: #f87171; font-weight: bold; font-size: 1.5rem; margin-right: 0.8rem; line-height: 0; }
+
+
+        /* Slide 6: Jornada */
+        .journey-steps { display: flex; justify-content: space-between; align-items: center; margin-top: 3rem; position: relative; }
+        .journey-steps::before { content: ''; position: absolute; top: 50%; left: 0; width: 100%; height: 2px; background: #475569; z-index: 0; }
+        .step { background: var(--card-bg); padding: 1.5rem; border-radius: 12px; width: 30%; position: relative; z-index: 1; box-shadow: var(--card-shadow); text-align: center; border: 1px solid var(--primary); }
+
+        /* Slide 7 & 8: Metodologias */
+        .method-layout { display: flex; align-items: center; gap: 3rem; }
+        .method-icon { font-size: 5rem; background: var(--card-bg); width: 150px; height: 150px; display: flex; align-items: center; justify-content: center; border-radius: 20px; box-shadow: var(--card-shadow); color: var(--primary); border: 1px solid rgba(255,255,255,0.05); }
+        .method-list li { margin-bottom: 1rem; color: var(--text-muted); }
+        .method-list strong { color: var(--text-main); }
+
+        /* === SLIDE 9: KANBAN BOARD === */
+        .kanban-layout { display: grid; grid-template-columns: 3fr 1fr; gap: 2rem; height: 70vh; align-items: start; }
+        .board-container { width: 100%; height: 100%; background: var(--card-bg); padding: 1rem; border-radius: 12px; box-shadow: var(--card-shadow); border: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .board-img { width: 100%; height: auto; max-height: 100%; object-fit: contain; border-radius: 8px; }
+        .sidebar-container { display: flex; flex-direction: column; gap: 1.5rem; }
+        .sidebar-card { background: var(--card-bg); padding: 1.5rem; border-radius: 12px; box-shadow: var(--card-shadow); text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.05); }
+        .legend-img { width: 100%; border-radius: 8px; margin-top: 0.5rem; }
+        .qr-img { width: 180px; height: 180px; margin-top: 0.5rem; max-width: 100%; border-radius: 8px; border: 5px solid white; /* Borda branca para o QR ler melhor no fundo escuro */ }
+
+        /* Slide 10: Timeline */
+        .timeline { margin-top: 2rem; border-left: 4px solid var(--primary); padding-left: 2rem; }
+        .timeline-item { margin-bottom: 2rem; position: relative; }
+        .timeline-item h3 { color: var(--text-main); margin-bottom: 0.5rem; font-size: 1.2rem; }
+        .timeline-item::before { content: ''; position: absolute; width: 16px; height: 16px; background: var(--bg-color); border: 4px solid var(--primary); border-radius: 50%; left: -2.6rem; top: 0; }
+
+        /* === CONFIGURAÇÃO DE IMPRESSÃO === */
+        @media print {
+            .presentation-container { overflow: visible; height: auto; }
+            .slide { 
+                height: 100vh; 
+                width: 100vw;
+                page-break-after: always; 
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact; 
+                background-color: #1e1e1e !important; /* Força fundo escuro na impressão */
+            }
+            .slide::before { display: block; opacity: 0.5; } /* Mantém o blob */
+            body { background-color: #1e1e1e; margin: 0; color: white; }
+            
+            .kanban-layout { height: 80vh; }
+            .slide-content { max-width: 100%; padding: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="presentation-container">
+
+    <div class="slide">
+        <div class="slide-content cover-layout">
+            <div>
+                <span class="cover-tag">Entrega 28/11/2025</span>
+                <h1>AgendaFácil</h1>
+                <p style="font-size: 1.8rem; color: var(--text-main); margin-top: 1rem; font-weight: 400;">Solução de agendamento simplificado para pequenos negócios.</p>
+                <p style="margin-top: 2rem; color: var(--text-muted);">Trabalho final da disciplina de MDS</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-member"><span>Product Owner</span><strong>Áquila</strong></div>
+                <div class="team-member"><span>Front-end</span><strong>Mariana</strong></div>
+                <div class="team-member"><span>Back-end</span><strong>Alexandre</strong></div>
+                <div class="team-member"><span>DevOps</span><strong>Brenno</strong></div>
+                <div class="team-member"><span>Quality Assurance</span><strong>Chico e Diego</strong></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <h2>O Problema: Gestão Analógica</h2>
+            <p>Pequenos negócios ainda dependem de cadernos de papel e WhatsApp.</p>
+            <div class="pain-grid">
+                <div class="pain-card"><h3>🚫 No-Shows</h3><p>O cliente esquece e não aparece, gerando prejuízo direto.</p></div>
+                <div class="pain-card"><h3>⏳ Perda de Tempo</h3><p>O profissional para de trabalhar para responder mensagens.</p></div>
+                <div class="pain-card"><h3>🤯 Desorganização</h3><p>Dificuldade de visualizar a semana e encaixes manuais.</p></div>
+                <div class="pain-card"><h3>📉 Perda de Dados</h3><p>Histórico de clientes perdido em conversas antigas.</p></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content" style="text-align: center;">
+            <h2>A Solução: Visão do Produto</h2>
+            <p style="max-width: 800px; margin: 0 auto 3rem auto;">Um sistema web simples onde a agenda é centralizada e o cliente tem autonomia.</p>
+            <div class="solution-card-wrapper">
+                <div class="solution-card accent-border"><h3>Agendamento Self-Service</h3><p>Cliente acessa o link e marca sozinho.</p></div>
+                <div class="solution-card"><h3>Calendário Visual</h3><p>Prestador vê a semana e bloqueia horários.</p></div>
+                <div class="solution-card accent-border"><h3>Simples & Acessível</h3><p>Focado em quem não gosta de softwares complexos.</p></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <h2>Personas: Quem estamos ajudando?</h2>
+            <div class="persona-container">
+                <div class="persona-card"><div class="persona-avatar">💇‍♀️</div><h3>Carla</h3><p style="font-weight: 600; color: var(--primary);">Dona de Salão (38 anos)</p><p>Quer organização financeira.</p></div>
+                <div class="persona-card"><div class="persona-avatar">💈</div><h3>Rafael</h3><p style="font-weight: 600; color: var(--primary);">Barbeiro (28 anos)</p><p>Perde tempo no WhatsApp.</p></div>
+                <div class="persona-card"><div class="persona-avatar">📱</div><h3>Marina</h3><p style="font-weight: 600; color: var(--primary);">Cliente (32 anos)</p><p>Quer resolver pelo celular.</p></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <h2>O MVP (Produto Mínimo Viável)</h2>
+            <p>Focamos no essencial para entregar valor rápido (MoSCoW).</p>
+            <div class="mvp-layout">
+                <div class="must-have">
+                    <h3>✅ MUST HAVE (Essencial)</h3>
+                    <ul>
+                        <li>Cadastro de Prestador e Perfil</li>
+                        <li>Cadastro de Serviços</li>
+                        <li>Calendário de Disponibilidade</li>
+                        <li>Link de Agendamento Público</li>
+                    </ul>
+                </div>
+                <div class="wont-have">
+                    <h3>🚫 WON'T HAVE (Futuro)</h3>
+                    <ul>
+                        <li>Pagamento Online</li>
+                        <li>Programa de Fidelidade</li>
+                        <li>App Nativo</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <h2>Jornada do Usuário Simplificada</h2>
+            <div style="margin-bottom: 2rem;">
+                <span style="background: var(--text-main); color: #1e1e1e; padding: 4px 10px; border-radius: 4px; font-weight: bold;">Fluxo do Prestador</span>
+                <div class="journey-steps"><div class="step"><strong>1. Acesso</strong><br>Login e Configuração</div><div class="step"><strong>2. Setup</strong><br>Define Serviços</div><div class="step"><strong>3. Gestão</strong><br>Gerencia Agenda</div></div>
+            </div>
+            <div>
+                <span style="background: var(--accent); color: white; padding: 4px 10px; border-radius: 4px; font-weight: bold;">Fluxo do Cliente</span>
+                <div class="journey-steps" style="margin-top: 1rem;"><div class="step"><strong>1. Descoberta</strong><br>Vê serviços</div><div class="step"><strong>2. Decisão</strong><br>Escolhe horário</div><div class="step"><strong>3. Sucesso</strong><br>Confirmação</div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="method-layout">
+                <div class="method-icon">🚀</div>
+                <div>
+                    <h2>Lean Inception</h2>
+                    <p>Utilizada para alinhar o grupo e definir o MVP em 1 semana.</p>
+                    <div class="card" style="margin-top: 2rem;">
+                        <ul class="method-list" style="padding-left: 1.2rem;">
+                            <li><strong>Rapidez:</strong> Ideal para prazos curtos.</li>
+                            <li><strong>Alinhamento:</strong> Todo o time entende o produto.</li>
+                            <li><strong>Foco no Valor:</strong> Evita desperdício.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="method-layout">
+                <div class="method-icon">📋</div>
+                <div>
+                    <h2>Metodologia Kanban</h2>
+                    <p>Gestão visual para fluxo contínuo e identificação de gargalos.</p>
+                    <div class="card" style="margin-top: 2rem;">
+                        <ul class="method-list" style="padding-left: 1.2rem;">
+                            <li><strong>Flexibilidade:</strong> Permite mudanças rápidas.</li>
+                            <li><strong>Visualização:</strong> WIP Limit aplicado.</li>
+                            <li><strong>Sem Cerimônias Longas:</strong> Foco na entrega.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <h2>Acompanhamento Visual (Trello)</h2>
+            <p>Utilizamos etiquetas por área (Dev, Design, PO) e colunas claras para o fluxo.</p>
+            
+            <div class="kanban-layout">
+                <div class="board-container">
+                    <img src="board.png" class="board-img" alt="Quadro Kanban Trello">
+                </div>
+
+                <div class="sidebar-container">
+                    
+                    <div class="sidebar-card">
+                        <h3 style="font-size: 1rem;">Legenda de Cores</h3>
+                        <img src="legenda.png" class="legend-img" alt="Legenda de Cores">
+                    </div>
+
+                    <div class="sidebar-card">
+                        <h3 style="font-size: 1rem;">Acesse o Quadro</h3>
+                        <img src="qrcode.png" class="qr-img" alt="QR Code Trello">
+                        <p style="font-size: 0.8rem; margin-top: 0.5rem; color: var(--text-muted);">Escaneie para ver</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <h2>Próximos Passos: Cronograma</h2>
+            <div class="timeline">
+                <div class="timeline-item"><h3>Semana 1 (Atual) - Concluído ✅</h3><p>Lean Inception e Kanban configurados.</p></div>
+                <div class="timeline-item"><h3>Semana 2 (até 05/12)</h3><p>Protótipos Figma e Banco de Dados.</p></div>
+                <div class="timeline-item"><h3>Semana 3 (até 12/12)</h3><p>Desenvolvimento dos cadastros.</p></div>
+                <div class="timeline-item"><h3 style="color: var(--accent);">Semana 4 (até 19/12) 🏁</h3><p>MVP Funcional e Apresentação.</p></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
