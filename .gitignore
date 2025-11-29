@@ -1,0 +1,17 @@
+# Node modules
+node_modules/
+npm-debug.log
+package-lock.json
+
+# Arquivos temporários
+*.log
+*.tmp
+nul
+
+# IDE
+.vscode/
+.idea/
+
+# Sistema
+.DS_Store
+Thumbs.db
