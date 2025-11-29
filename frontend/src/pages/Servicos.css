@@ -1,0 +1,221 @@
+.servicos-container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.servicos-header {
+  background: white;
+  padding: 20px 30px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-back {
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid #667eea;
+  border-radius: 8px;
+  color: #667eea;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.btn-back:hover {
+  background: #667eea;
+  color: white;
+}
+
+.servicos-header h1 {
+  font-size: 24px;
+  color: #333;
+}
+
+.servicos-main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 30px 20px;
+}
+
+.servicos-lista h2 {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.servicos-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.servico-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s;
+}
+
+.servico-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.servico-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.servico-icon {
+  font-size: 24px;
+}
+
+.servico-nome {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.servico-detalhes {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.servico-preco {
+  font-size: 16px;
+  font-weight: 600;
+  color: #667eea;
+}
+
+.separador {
+  color: #ccc;
+}
+
+.servico-duracao {
+  font-size: 16px;
+  color: #666;
+}
+
+.btn-editar {
+  margin-left: auto;
+  padding: 8px 20px;
+  background: transparent;
+  border: 1px solid #667eea;
+  border-radius: 8px;
+  color: #667eea;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.btn-editar:hover {
+  background: #667eea;
+  color: white;
+}
+
+.add-card {
+  border: 2px dashed #ccc;
+  cursor: pointer;
+  background: #fafafa;
+  text-align: center;
+}
+
+.add-card:hover {
+  border-color: #667eea;
+  background: #f0f0ff;
+}
+
+.add-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: #666;
+  font-weight: 500;
+}
+
+.add-icon {
+  font-size: 32px;
+  color: #667eea;
+}
+
+.divider {
+  height: 2px;
+  background: linear-gradient(to right, transparent, #ccc, transparent);
+  margin: 40px 0 30px;
+}
+
+.novo-servico-section h2 {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.novo-servico-form {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.input-field {
+  width: 100%;
+  padding: 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 16px;
+  margin-bottom: 15px;
+  transition: border-color 0.3s;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.input-row {
+  display: flex;
+  gap: 15px;
+}
+
+.input-half {
+  flex: 1;
+}
+
+.textarea-field {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.btn-salvar {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  transition: transform 0.2s;
+}
+
+.btn-salvar:hover {
+  transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+  .servicos-header {
+    padding: 15px 20px;
+  }
+
+  .input-row {
+    flex-direction: column;
+    gap: 0;
+  }
+}
